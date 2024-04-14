@@ -1,0 +1,11 @@
+name: 'dbt_twirl'
+version: '0.0.1'
+config-version: 2
+require-dbt-version: [">=1.2.0", "<2.0.0"]
+
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
