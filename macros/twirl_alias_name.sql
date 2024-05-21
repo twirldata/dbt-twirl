@@ -1,4 +1,4 @@
-{% macro default__generate_alias_name(custom_alias_name=none, node=none) -%}
+{% macro twirl_alias_name(custom_alias_name=none, node=none) -%}
     {%- if custom_alias_name is none -%}
         {%- set table_name = node.name -%}
     {%- else -%}
