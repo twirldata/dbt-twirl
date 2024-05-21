@@ -7,14 +7,17 @@
     ```
     packages:
     - package: twirldata/dbt_twirl
-    - version: 0.0.1
+    - version: v0.0.2
     ```
 
 2. Install it by running `dbt deps`.
-3. Add the following to your `dbt_project.yml`, to allow dbt_twirl to override some builtin dbt macros:
-    ```
-    dispatch:
-    - macro_namespace: dbt
-        search_order: ['your_dbt_project_name', 'dbt_twirl', 'dbt']
-    ```
-    where `your_dbt_project_name` must be the same as you put after `name:` in your `dbt_project.yml` file.
+3. If you want your dbt deployment to use the same naming convention for dev tables as that Twirl uses (e.g. all dev tables in one dev schema/dataset, named like `dev_username.schema_name__table_name` / `dev_username.dataset_name__table_name`), you can add the following macro named `twirl_names.yml` to you project:
+```yaml title="macros/twirl_names.yml"
+{% macro generate_alias_name(custom_alias_name=none, node=none) -%}
+{{ dbt_twirl.twirl_alias_name(custom_alias_name, node) }}
+{%- endmacro %}
+
+{% macro generate_schema_name(custom_schema_name, node) -%}
+{{ dbt_twirl.twirl_schema_name(custom_schema_name, node) }}
+{%- endmacro %}
+```
